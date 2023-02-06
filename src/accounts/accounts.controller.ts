@@ -30,6 +30,7 @@ export class AccountsController {
       body.acc_email,
       body.acc_pass,
     );
+    //* Trả về access_token kiểu boolen
     return res.json({ access_token: check });
   }
 }

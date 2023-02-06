@@ -11,10 +11,14 @@ export class AccountsService {
 
   async create(createAccountDto: CreateAccountDto): Promise<Account> {
     const createdAccount = new this.accountModel(createAccountDto);
+
+    //* hash password
     const salt = await bcrypt.genSalt();
     await bcrypt
       .hash(createdAccount.acc_pass, salt)
       .then((pass) => (createdAccount.acc_pass = pass));
+
+    //* create new doc
     return createdAccount.save();
   }
 
@@ -23,6 +27,7 @@ export class AccountsService {
   }
 
   async checkAccount(acc_email: string, acc_pass: string) {
+    //* tìm tới thằng email của user xong lấy ra để so sánh pass đã mã hóa trả về giá trị boolen
     return this.accountModel
       .findOne({ acc_email: acc_email })
       .then((account) => {
