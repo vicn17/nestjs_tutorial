@@ -4,10 +4,14 @@ import { CreateAccountDto } from './dto/create-account.dto';
 // import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account } from './interface/account.interface';
 import { Response } from 'express';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('accounts/')
 export class AccountsController {
-  constructor(private readonly accountsService: AccountsService) {}
+  constructor(
+    private readonly accountsService: AccountsService,
+    private jwtService: JwtService,
+  ) {}
 
   @Post('create')
   create(@Body() createAccountDto: CreateAccountDto) {
@@ -26,11 +30,12 @@ export class AccountsController {
 
   @Post('checkLogin')
   async checkLogin(@Body() body: any, @Res() res: Response) {
-    const check = await this.accountsService.checkAccount(
+    const account = await this.accountsService.checkAccount(
       body.acc_email,
       body.acc_pass,
     );
-    //* Trả về access_token kiểu boolen
-    return res.json({ access_token: check });
+    const jwt = await this.jwtService.signAsync({ id: account.id });
+    const giai = await this.jwtService.verifyAsync(jwt);
+    return res.json({ access_token: jwt, giai: giai });
   }
 }

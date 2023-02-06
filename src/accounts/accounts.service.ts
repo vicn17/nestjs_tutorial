@@ -30,8 +30,10 @@ export class AccountsService {
     //* tìm tới thằng email của user xong lấy ra để so sánh pass đã mã hóa trả về giá trị boolen
     return this.accountModel
       .findOne({ acc_email: acc_email })
-      .then((account) => {
-        return bcrypt.compareSync(acc_pass, account.acc_pass);
+      .then(async (account) => {
+        if (bcrypt.compareSync(acc_pass, account.acc_pass)) {
+          return account;
+        }
       });
   }
 
