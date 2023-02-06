@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Body, Param, Res } from '@nestjs/common';
 import { AccountsService } from './accounts.service';
 import { CreateAccountDto } from './dto/create-account.dto';
-// import { UpdateAccountDto } from './dto/update-account.dto';
 import { Account } from './interface/account.interface';
 import { Response } from 'express';
 import { JwtService } from '@nestjs/jwt';

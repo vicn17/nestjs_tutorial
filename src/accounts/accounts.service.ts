@@ -27,7 +27,6 @@ export class AccountsService {
   }
 
   async checkAccount(acc_email: string, acc_pass: string) {
-    //* tìm tới thằng email của user xong lấy ra để so sánh pass đã mã hóa trả về giá trị boolen
     return this.accountModel
       .findOne({ acc_email: acc_email })
       .then(async (account) => {
