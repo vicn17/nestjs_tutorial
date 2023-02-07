@@ -6,12 +6,12 @@ import { Response } from 'express';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post('/create')
+  @Post('create')
   async createUser(@Body() body: any) {
     return this.usersService.create(body);
   }
 
-  @Get('/findAll')
+  @Get('findAll')
   async getUsers(@Res() res: Response) {
     return await this.usersService.findAll().then((list) => res.json(list));
   }
