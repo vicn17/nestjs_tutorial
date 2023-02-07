@@ -1,13 +1,16 @@
-import { CatsModule } from './cats/cats.module';
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AccountsModule } from './accounts/accounts.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { UsersModule } from './users/users.module';
+import { connectDB } from './config/mongodb/db.connect';
+import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [CatsModule, AccountsModule, ConfigModule.forRoot()],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    MongooseModule.forRoot(process.env.url_connect || connectDB),
+    AuthModule,
+    UsersModule,
+    ConfigModule.forRoot(),
+  ],
 })
 export class AppModule {}
