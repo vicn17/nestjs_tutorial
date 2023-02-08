@@ -27,7 +27,7 @@ export class AuthService {
     return null;
   }
 
-  async login(dataUser: any) {
+  async login(dataUser: any): Promise<{ access_token: string }> {
     return {
       access_token: this.jwtService.sign(dataUser),
     };
